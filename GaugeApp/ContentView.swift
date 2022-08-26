@@ -8,14 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var current = 15.0
+    @State private var minimum = 0.0
+    @State private var maximum = 40.0
+   
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
-        }
-        .padding()
+        VStack(spacing: 20){
+            Text("Temperature")
+                .font(.largeTitle)
+            Gauge(value: current, in: minimum...maximum) {
+                
+            } currentValueLabel: {
+                Text("\(Int(current))")
+            } minimumValueLabel: {
+                Text("\(Int(minimum))")
+                    .foregroundColor(.blue)
+            } maximumValueLabel: {
+                Text("\(Int(maximum))")
+                    .foregroundColor(.red)
+            }
+            .gaugeStyle(.accessoryCircular)
+            .tint(Gradient(colors: [.blue, .green, .yellow, .orange, .red]))
+            .scaleEffect(1.5)
+            
+            Slider(value: $current, in: minimum...maximum)
+                .padding()
+        }.padding()
     }
 }
 
